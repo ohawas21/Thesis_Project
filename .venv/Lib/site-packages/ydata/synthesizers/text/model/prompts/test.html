@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #ecf0f1;
+      --accent-color: #3498db;
+      --text-color: #2d3436;
+      --border-color: #dcdde1;
+      --font-family: 'Roboto', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: #fff;
+      color: var(--text-color);
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    header, footer, section {
+      margin-bottom: 2rem;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      max-width: 150px;
+    }
+
+    .invoice-meta {
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+    .invoice-meta h1 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .client-info {
+      background: var(--secondary-color);
+      padding: 1rem;
+      border-radius: 5px;
+    }
+
+    .client-info h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border: 1px solid var(--border-color);
+    }
+
+    thead {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: var(--secondary-color);
+    }
+
+    tbody tr:hover {
+      background: #dfe6e9;
+    }
+
+    .totals {
+      max-width: 300px;
+      margin-left: auto;
+      margin-top: 2rem;
+    }
+
+    .totals table {
+      border: none;
+      box-shadow: none;
+    }
+
+    .totals td {
+      border: none;
+      padding: 0.5rem 0;
+    }
+
+    .totals tr:last-child td {
+      font-weight: bold;
+      color: var(--primary-color);
+      border-top: 2px solid var(--primary-color);
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #636e72;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .invoice-meta {
+        text-align: left;
+        margin-top: 1rem;
+      }
+
+      .totals {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-top">
+      <img src="your-logo.png" alt="Company Logo" class="logo" />
+      <div class="invoice-meta">
+        <h1>Invoice</h1>
+        <p><strong>Invoice #:</strong> 2025-001</p>
+        <p><strong>Date:</strong> May 11, 2025</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="client-info">
+    <h2>Bill To:</h2>
+    <p><strong>Name:</strong> Jane Doe</p>
+    <p><strong>Address:</strong> 123 Main Street, City, Country</p>
+    <p><strong>Email:</strong> jane.doe@example.com</p>
+  </section>
+
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Design Work</td>
+          <td>10</td>
+          <td>$50</td>
+          <td>$500</td>
+        </tr>
+        <tr>
+          <td>Development</td>
+          <td>20</td>
+          <td>$60</td>
+          <td>$1,200</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="totals">
+    <table>
+      <tr>
+        <td>Subtotal:</td>
+        <td>$1,700</td>
+      </tr>
+      <tr>
+        <td>Tax (10%):</td>
+        <td>$170</td>
+      </tr>
+      <tr>
+        <td>Total:</td>
+        <td>$1,870</td>
+      </tr>
+    </table>
+  </section>
+
+  <footer>
+    <p>Payment due within 15 days. Please make payment to CompanyName.</p>
+    <p>Contact us at support@example.com | +1 555-555-5555</p>
+  </footer>
+
+</body>
+</html>

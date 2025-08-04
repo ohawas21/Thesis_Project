@@ -6,6 +6,8 @@ Usage:
 >>> for i in trange(10):
 ...     ...
 """
+from __future__ import absolute_import
+
 from warnings import warn
 
 from rich.progress import (
@@ -13,6 +15,7 @@ from rich.progress import (
 
 from .std import TqdmExperimentalWarning
 from .std import tqdm as std_tqdm
+from .utils import _range
 
 __author__ = {"github.com/": ["casperdcl"]}
 __all__ = ['tqdm_rich', 'trrange', 'tqdm', 'trange']
@@ -90,7 +93,7 @@ class tqdm_rich(std_tqdm):  # pragma: no cover
         kwargs['disable'] = bool(kwargs.get('disable', False))
         progress = kwargs.pop('progress', None)
         options = kwargs.pop('options', {}).copy()
-        super().__init__(*args, **kwargs)
+        super(tqdm_rich, self).__init__(*args, **kwargs)
 
         if self.disable:
             return
@@ -116,8 +119,7 @@ class tqdm_rich(std_tqdm):  # pragma: no cover
     def close(self):
         if self.disable:
             return
-        self.display()  # print 100%, vis #1306
-        super().close()
+        super(tqdm_rich, self).close()
         self._prog.__exit__(None, None, None)
 
     def clear(self, *_, **__):
@@ -138,12 +140,15 @@ class tqdm_rich(std_tqdm):  # pragma: no cover
         """
         if hasattr(self, '_prog'):
             self._prog.reset(total=total)
-        super().reset(total=total)
+        super(tqdm_rich, self).reset(total=total)
 
 
 def trrange(*args, **kwargs):
-    """Shortcut for `tqdm.rich.tqdm(range(*args), **kwargs)`."""
-    return tqdm_rich(range(*args), **kwargs)
+    """
+    A shortcut for `tqdm.rich.tqdm(xrange(*args), **kwargs)`.
+    On Python3+, `range` is used instead of `xrange`.
+    """
+    return tqdm_rich(_range(*args), **kwargs)
 
 
 # Aliases

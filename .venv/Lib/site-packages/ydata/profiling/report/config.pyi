@@ -1,0 +1,3 @@
+from typing import Callable
+
+def get_render_map() -> dict[str, Callable]: ...

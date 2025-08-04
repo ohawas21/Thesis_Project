@@ -1,0 +1,92 @@
+div.container
+	section.content
+		h2.heading=utility.title
+		each featured in featured
+			if featured.label == "Utility Score"
+				div.speedometer-graph--central
+					div.speedometer-pointer-wrapper(style='transform:rotate({{featured.rotation}}deg);')
+						div.speedometer-pointer
+					div.speedometer-mask
+						div.speedometer-fill
+						div.speedometer-bg
+					div.speedometer-value {{ featured.qualitative_label }}
+					div.speedometer-item
+						label.speedometer-title=featured.label
+
+		div.section-description {{ utility.text }}
+
+div.container
+	section.content
+		h2.heading.heading--small=utility.qscore_title
+		if utility.blocks2_available
+			div.row
+				each block in utility.block2
+					if block.value != None
+						div.block.block--metrics
+							div.block-box-small
+								label.block-value=block.value
+								label.block-label=block.label
+
+		div.row
+			div {{ utility.metrics_description_2 }}
+
+		if utility.has_errors
+			div.section-description.section-description--logs
+				h3.heading.heading--subtitle="Error Logs"
+				each block in utility.block2
+					if block.label in utility_error_logs.keys()
+						p {{ utility_error_logs[block.label] }}
+
+if utility.tstr_title
+	div.container
+		section.content
+			h2.heading.heading--small=utility.tstr_title
+			if utility.block.tstr and utility.block.trtr and utility.block.trtr_ratio
+				div.row.row--with-table
+					div.column.column--third
+						div.vertical-boxes
+							div.vertical-box
+								div.box
+									div.block-box.block-box-small
+										label.block-value=utility.block.tstr
+										label.block-label=utility.block.tstr_label
+							div.vertical-box
+								div.box
+									div.block-box.block-box-small
+										label.block-value=utility.block.trtr
+										label.block-label=utility.block.trtr_label
+							div.vertical-box
+								div.box
+									div.block-box.block-box-small
+										label.block-value=utility.block.trtr_ratio
+										label.block-label=utility.block.trtr_ratio_label
+					div.column.column--majority {{ pdf_tools.dataframe_to_html(utility.tstr_dataframe, extra_classes=['table'], use_default_classes=False) }}
+
+				div.row
+					div {{ utility.metrics_description_1 }}
+
+			elif 'Train on Synthetic Test on Real' in utility_error_logs.keys()
+				div.row
+					div {{ utility.metrics_description_1 }}
+				div.section-description.section-description--logs
+					h3.heading.heading--subtitle="Error Logs"
+					p {{ utility_error_logs['Train on Synthetic Test on Real'] }}
+
+if "feature_importance" in utility
+	div.container
+		section.content
+			h2.heading.heading--small=utility.feature_importance.title
+			div.row.row--under-heading
+				div {{ utility.feature_importance.desc }}
+			if utility.feature_importance.plot != None
+				div.block.block--metrics
+					div.block-box-small
+						label.block-value=utility.feature_importance.score
+						label.block-label=utility.feature_importance.name
+				div.row
+					div.column
+						img(src='{{ pdf_tools.figure_data(utility.feature_importance.plot) }}')
+			elif 'Feature Importance' in utility_error_logs.keys()
+				div.section-description.section-description--logs
+					h3.heading.heading--subtitle="Error Logs"
+					p {{ utility_error_logs['Feature Importance'] }}

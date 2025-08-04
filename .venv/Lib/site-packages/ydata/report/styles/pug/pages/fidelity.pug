@@ -1,0 +1,247 @@
+div.container
+	section.content
+		h2.heading=fidelity.title
+		each featured in featured
+			if featured.label == "Fidelity Score"
+				div.speedometer-graph--central
+					div.speedometer-pointer-wrapper(style='transform:rotate({{featured.rotation}}deg);')
+						div.speedometer-pointer
+					div.speedometer-mask
+						div.speedometer-fill
+						div.speedometer-bg
+					div.speedometer-value {{ featured.qualitative_label }}
+					div.speedometer-item
+						label.speedometer-title=featured.label
+
+		div.section-description {{ fidelity.text }}
+
+div.container
+	section.content
+		h2.heading.heading--small=fidelity.stats_title
+		div.row.row--under-heading
+			p=fidelity.stats_text
+		each block_data in fidelity.blocks
+			if fidelity.blocks_available
+				div.row
+					each block in block_data
+						if block.value != None
+							div.block.block--metrics
+								div.block-box-small
+									label.block-value=block.value
+									label.block-label=block.label
+
+		div.row
+			div {{ fidelity.metrics_description }}
+
+		if fidelity.has_errors
+			div.section-description.section-description--logs
+				h3.heading.heading--subtitle="Error Logs"
+				each block_data in fidelity.blocks
+					each block in block_data
+						if '_label' in block.keys() and block._label in fidelity_error_logs.keys()
+							p {{ fidelity_error_logs[block._label] }}
+						elif block.label in fidelity_error_logs.keys()
+							p {{ fidelity_error_logs[block.label] }}
+
+div.container
+	section.content
+		h2.heading.heading--small=fidelity.missing_values_similarity.title
+		div.row.row--under-heading
+			p {{ fidelity.missing_values_similarity.description }}
+		if fidelity.missing_values_similarity.mean != None
+			div.block.block--metrics
+				div.block-box-small
+					label.block-value=fidelity.missing_values_similarity.mean
+					label.block-label-large=fidelity.missing_values_similarity.title
+			div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.missing_values_similarity.dataframes.mvs_df_top_k_cols, extra_classes=['table'], use_default_classes=False) }}
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.missing_values_similarity.dataframes.mvs_df_top_bottom_cols, extra_classes=['table'], use_default_classes=False) }}
+		elif 'Missing Values Similarity' in fidelity_error_logs.keys()
+				div.section-description.section-description--logs
+					h3.heading.heading--subtitle="Error Logs"
+					p {{ fidelity_error_logs['Missing Values Similarity'] }}
+
+if fidelity.statistical_similarity.has_errors or not fidelity.statistical_similarity.dataframe.empty
+	div.container
+		section.content
+			h2.heading.heading--small=fidelity.statistical_similarity.title
+			div.row.row--under-heading
+				p {{ fidelity.statistical_similarity.description }}
+			if not fidelity.statistical_similarity.has_errors
+				each block_row in fidelity.statistical_similarity.mean_blocks
+					div.row
+						each block in block_row
+							div.block.block--metrics
+								div.block-box-small
+									label.block-value=block.value
+									label.block-label-medium=block.label
+				div.row
+					div.column {{ pdf_tools.dataframe_to_html(fidelity.statistical_similarity.dataframe, extra_classes=['table'], use_default_classes=False) }}
+			elif 'Statistical Similarity' in fidelity_error_logs.keys()
+					div.section-description.section-description--logs
+						h3.heading.heading--subtitle="Error Logs"
+						p {{ fidelity_error_logs['Statistical Similarity'] }}
+
+div.container
+	section.content
+		h2.heading.heading--small=fidelity.distribution.title
+		div.row.row--under-heading
+			p=fidelity.distribution.text
+
+		if fidelity.distribution.mean.ks_test.value == None or not fidelity.distribution.dataframes.ks_df_top_k_cols.empty
+			div.row.row--under-heading
+				h2.heading.heading--subtitle=fidelity.distribution.mean.ks_test.label
+			div.row.row--no-margin
+				div {{ fidelity.distribution.description.ks_test }}
+			if fidelity.distribution.mean.ks_test.value != None
+				div.row
+					div.block.block--metrics
+						div.block-box-small
+							label.block-value=fidelity.distribution.mean.ks_test.value
+							label.block-label-large=fidelity.distribution.mean.ks_test.label
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.distribution.dataframes.ks_df_top_k_cols, extra_classes=['table'], use_default_classes=False) }}
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.distribution.dataframes.ks_df_top_bottom_cols, extra_classes=['table'], use_default_classes=False) }}
+			elif 'Kolmogorov-Smirnov Test' in fidelity_error_logs.keys()
+					div.section-description.section-description--logs
+						h3.heading.heading--subtitle="Error Logs"
+						p {{ fidelity_error_logs['Kolmogorov-Smirnov Test'] }}
+
+		if fidelity.distribution.mean.total_variation_distance.value == None or not fidelity.distribution.dataframes.total_variation_df_top_k_cols.empty
+			div.row.row--under-heading
+				h2.heading.heading--subtitle=fidelity.distribution.mean.total_variation_distance.label
+			div.row.row--no-margin
+				div {{ fidelity.distribution.description.total_variation_distance }}
+			if fidelity.distribution.mean.total_variation_distance.value != None
+				div.row
+					div.block.block--metrics
+						div.block-box-small
+							label.block-value=fidelity.distribution.mean.total_variation_distance.value
+							label.block-label-large=fidelity.distribution.mean.total_variation_distance.label
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.distribution.dataframes.total_variation_df_top_k_cols, extra_classes=['table'], use_default_classes=False) }}
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.distribution.dataframes.total_variation_df_top_bottom_cols, extra_classes=['table'], use_default_classes=False) }}
+			elif 'Total Variation Distance' in fidelity_error_logs.keys()
+					div.section-description.section-description--logs
+						h3.heading.heading--subtitle="Error Logs"
+						p {{ fidelity_error_logs['Total Variation Distance'] }}
+
+div.container
+	section.content
+		h2.heading.heading--small=fidelity.mutual_information.title
+		div.row.row--under-heading
+			div {{ fidelity.mutual_information.description }}
+		if not fidelity.mutual_information.has_errors:
+			div.row.row--small-margin
+				div.column.column--third
+					div.vertical-boxes
+						div.vertical-box
+							div.box
+								div.block-box.block-box
+									label.block-value=fidelity.mutual_information.mean_str
+									label.block-label=fidelity.mutual_information.title
+				div.column.column--majority
+					div.vertical-boxes
+						div.vertical-box
+							div.box
+								img(src='{{ pdf_tools.figure_data(fidelity.mutual_information.chart_top_k_cols) }}')
+						div.vertical-box
+							div.box
+								img(src='{{ pdf_tools.figure_data(fidelity.mutual_information.chart_bottom_k_cols) }}')
+		elif 'Mutual Information' in fidelity_error_logs.keys()
+				div.section-description.section-description--logs
+					h3.heading.heading--subtitle="Error Logs"
+					p {{ fidelity_error_logs['Mutual Information'] }}
+
+div.container
+	section.content
+		h2.heading.heading--small=fidelity.coverage.title
+		div.row.row--under-heading
+			div {{ fidelity.coverage.text }}
+
+		if fidelity.coverage.mean.cc.value == None or not fidelity.coverage.dataframes.cc_df_top_k_cols.empty
+			div.row
+				h2.heading.heading--subtitle=fidelity.coverage.title_cat
+			div.row.row--no-margin
+				p {{ fidelity.coverage.text_cat }}
+			div.row.row--under-heading
+				h2.heading.heading--subsubtitle=fidelity.coverage.mean.cc.label
+			div.row.row--no-margin
+				div {{ fidelity.coverage.description.cc }}
+			if fidelity.coverage.mean.cc.value != None
+				div.row
+					div.block.block--metrics
+						div.block-box-small
+							label.block-value=fidelity.coverage.mean.cc.value
+							label.block-label-large=fidelity.coverage.mean.cc.label
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.coverage.dataframes.cc_df_top_k_cols, extra_classes=['table'], use_default_classes=False) }}
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.coverage.dataframes.cc_df_top_bottom_cols, extra_classes=['table'], use_default_classes=False) }}
+			elif 'Category Coverage' in fidelity_error_logs.keys()
+					div.section-description.section-description--logs
+						h3.heading.heading--subtitle="Error Logs"
+						p {{ fidelity_error_logs['Category Coverage'] }}
+
+		if fidelity.coverage.mean.mcc.value == None or not fidelity.coverage.dataframes.mcc_df_top_k_cols.empty
+			div.row
+				h2.heading.heading--subsubtitle=fidelity.coverage.mean.mcc.label
+			div.row.row--no-margin
+				div {{ fidelity.coverage.description.mcc }}
+			if fidelity.coverage.mean.mcc.value != None
+				div.row
+					div.block.block--metrics
+						div.block-box-small
+							label.block-value=fidelity.coverage.mean.mcc.value
+							label.block-label-large=fidelity.coverage.mean.mcc.label
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.coverage.dataframes.mcc_df_top_k_cols, extra_classes=['table'], use_default_classes=False) }}
+				div.row.row--with-table
+					div.column--table {{ pdf_tools.dataframe_to_html(fidelity.coverage.dataframes.mcc_df_top_bottom_cols, extra_classes=['table'], use_default_classes=False) }}
+			elif 'Missing Category Coverage' in fidelity_error_logs.keys()
+					div.section-description.section-description--logs
+						h3.heading.heading--subtitle="Error Logs"
+						p {{ fidelity_error_logs['Missing Category Coverage'] }}
+
+		if fidelity.coverage.mean.rc.value == None or not fidelity.coverage.dataframes.rc_df_top_k_cols.empty
+			div.section
+				div.row
+					h2.heading.heading--subtitle=fidelity.coverage.title_num
+				div.row.row--no-margin
+					p {{ fidelity.coverage.text_num }}
+				div.row.row--under-heading
+					h2.heading.heading--subsubtitle=fidelity.coverage.mean.rc.label
+				div.row.row--no-margin
+					div {{ fidelity.coverage.description.rc }}
+				if fidelity.coverage.mean.rc.value != None
+					div.row
+						div.block.block--metrics
+							div.block-box-small
+								label.block-value=fidelity.coverage.mean.rc.value
+								label.block-label-large=fidelity.coverage.mean.rc.label
+					div.row.row--with-table
+						div.column--table {{ pdf_tools.dataframe_to_html(fidelity.coverage.dataframes.rc_df_top_k_cols, extra_classes=['table'], use_default_classes=False) }}
+					div.row.row--with-table
+						div.column--table {{ pdf_tools.dataframe_to_html(fidelity.coverage.dataframes.rc_df_top_bottom_cols, extra_classes=['table'], use_default_classes=False) }}
+				elif 'Range Coverage' in fidelity_error_logs.keys()
+					div.section-description.section-description--logs
+						h3.heading.heading--subtitle="Error Logs"
+						p {{ fidelity_error_logs['Range Coverage'] }}
+
+if plots.available
+	div.container
+		section.content
+			h2.heading.heading--small=plots.title
+			div.row.row--under-heading
+				div {{ plots.dimension_reduction_description }}
+			if not plots.has_errors
+				div.row
+					div.column
+						img(src='{{ pdf_tools.figure_data(plots.pca_chart) }}')
+			elif 'Dimensionality Reduction' in fidelity_error_logs.keys()
+				div.section-description.section-description--logs
+					h3.heading.heading--subtitle="Error Logs"
+					p {{ fidelity_error_logs['Dimensionality Reduction'] }}

@@ -1,0 +1,2 @@
+[fs.opener]
+gs = fs_gcsfs.opener:GCSFSOpener

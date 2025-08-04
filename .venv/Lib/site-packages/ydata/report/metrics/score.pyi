@@ -1,0 +1,19 @@
+from enum import Enum
+from typing import Any
+
+class MetricType(Enum):
+    VISUAL = 'visual'
+    NUMERIC = 'numeric'
+
+class MetricScore:
+    def __init__(self, name: str, type: MetricType, values: Any, description: str = '') -> None: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def values(self) -> list: ...
+    @property
+    def type(self) -> MetricType: ...
+    @property
+    def description(self) -> str: ...
+    @property
+    def is_error(self) -> bool: ...

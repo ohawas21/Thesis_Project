@@ -1,0 +1,3 @@
+from ydata.dataset import Dataset
+
+def validate_columns_in_dataset(dataset: Dataset, columns: list[str] | None = None) -> None: ...

@@ -1,0 +1,1 @@
+from ydata.quality.outlier.representation.stddev import StandardDeviationRepresentation as StandardDeviationRepresentation

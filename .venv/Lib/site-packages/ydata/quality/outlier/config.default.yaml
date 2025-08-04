@@ -1,0 +1,17 @@
+pipelines:
+  - std:
+      detection:
+        class: StandardDeviation
+        params:
+          sigma: 2
+          threshold: 0.
+      clustering: GroupByClustering
+      representation:
+        class: StandardDeviationRepresentation
+        params:
+          sigma: 2
+          threshold: 0.
+  - variance:
+      projection: PCA
+      detection: ECOD
+      clustering: HDBSCANClustering

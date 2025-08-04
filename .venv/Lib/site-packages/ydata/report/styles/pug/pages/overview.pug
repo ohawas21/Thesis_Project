@@ -1,0 +1,29 @@
+div.container
+	header.header
+		h1.synth-name {{ synth_name }}
+		h1.main-heading {{ title }}
+		img.logo(src="https://assets.ydata.ai/YData_logo_colored_black.svg")
+	section.content
+		div.overview
+			div.overview__infos
+				div.privacy
+					label.privacy__header=privacy_level.label
+					label.privacy__value=privacy_level.value
+				each info in infos
+					div.info
+						label.info__value=info.value
+						label.info__description=info.label
+				div.info
+					label.info__value=anonymized.n_anonymized_cols
+					label.info__description=anonymized.n_anonymized_cols_label
+			div.overview__featured
+				each featured in featured
+					div.speedometer-graph__featured
+						div.speedometer-pointer-wrapper(style='transform:rotate({{featured.rotation}}deg);')
+							div.speedometer-pointer
+						div.speedometer-mask
+							div.speedometer-fill
+							div.speedometer-bg
+						div.speedometer-value {{ featured.qualitative_label }}
+						div.speedometer-item
+							label.speedometer-title__featured {{ featured.label }}

@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+from ydata.utils.data_types import VariableType
+from ydata.utils.random import RandomSeed as RandomSeed
+
+def proper(X: Incomplete | None = None, y: Incomplete | None = None, random_state: RandomSeed = None): ...
+def smooth(dtype: VariableType, y_synth, y_real_min: float, y_real_max: float, random_state: RandomSeed = None): ...

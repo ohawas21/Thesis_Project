@@ -1,0 +1,16 @@
+import logging
+from _typeshed import Incomplete
+
+DATATYPE_MAPPING: Incomplete
+
+def utilslogger_config(verbose): ...
+def is_running_in_databricks(): ...
+def analytics_features(datatype: str, dbx: str, method: str, nrows: int | None = None, ncols: int | None = None, ntables: int | None = None, ndocs: int | None = None) -> None:
+    """
+        Returns metrics and analytics from ydata-sdk
+    """
+def get_datasource_info(dataset): ...
+
+class SDKLogger(logging.Logger):
+    def __init__(self, name: str, level: int = ...) -> None: ...
+    def info(self, datatype: str, method: str, dataset: Incomplete | None = None, ncols: int | None = None, nrows: int | None = None, ndocs: int | None = None) -> None: ...

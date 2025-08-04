@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+FLOATING_POINT_COMPARISON: float
+CONFIDENT_THRESHOLDS_LOWER_BOUND: Incomplete
+TINY_VALUE: float
+CLIPPING_LOWER_BOUND: float

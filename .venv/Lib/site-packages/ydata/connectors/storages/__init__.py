@@ -1,0 +1,22 @@
+_LOCAL_STORAGE = "file"
+_ADL_STORAGE = "azure_dl"
+_AZURE_STORAGE = "azure_storage"
+_S3_STORAGE = "s3"
+_GCS_STORAGE = "gcs"
+_BIGQUERY_STORAGE = "big_query"
+_RDBMS_STORAGE = "rdbms"
+_LAKEHOUSE_STORAGE = "lakehouse"
+_MAX_SAMPLE = 10000
+
+_STORAGE_TYPES = {
+    _LOCAL_STORAGE,
+    _AZURE_STORAGE,
+    _ADL_STORAGE,
+    _S3_STORAGE,
+    _GCS_STORAGE,
+    _BIGQUERY_STORAGE,
+    _RDBMS_STORAGE,
+    _LAKEHOUSE_STORAGE
+}
+_CLOUD_STORAGE = {_ADL_STORAGE, _AZURE_STORAGE, _S3_STORAGE, _GCS_STORAGE}
+_RDBMS_TYPES = {"mysql", "postgres", "oracle", "mssql"}

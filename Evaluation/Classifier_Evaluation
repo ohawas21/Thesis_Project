@@ -1,0 +1,46 @@
+📊 Results for: Real Only
+              precision    recall  f1-score   support
+
+           0       0.96      0.96      0.96        56
+           1       0.96      0.93      0.94        55
+           2       0.96      1.00      0.98        55
+
+    accuracy                           0.96       166
+   macro avg       0.96      0.96      0.96       166
+weighted avg       0.96      0.96      0.96       166
+
+
+📊 Results for: Real + CTGAN
+              precision    recall  f1-score   support
+
+           0       0.99      0.96      0.98       111
+           1       0.90      0.95      0.93       110
+           2       0.96      0.93      0.94       110
+
+    accuracy                           0.95       331
+   macro avg       0.95      0.95      0.95       331
+weighted avg       0.95      0.95      0.95       331
+
+
+📊 Results for: Real + TAEGAN
+              precision    recall  f1-score   support
+
+           0       0.98      0.97      0.98       111
+           1       0.95      0.96      0.95       110
+           2       0.98      0.97      0.98       110
+
+    accuracy                           0.97       331
+   macro avg       0.97      0.97      0.97       331
+weighted avg       0.97      0.97      0.97       331
+
+
+📊 Results for: Real + TransformerGAN
+              precision    recall  f1-score   support
+
+           0       0.97      0.93      0.95       111
+           1       0.94      0.94      0.94       110
+           2       0.93      0.97      0.95       110
+
+    accuracy                           0.95       331
+   macro avg       0.95      0.95      0.95       331
+weighted avg       0.95      0.95      0.95       331
