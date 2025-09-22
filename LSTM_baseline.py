@@ -323,8 +323,8 @@ class MoldingQualityClassifier:
 # Usage example - you'll need to specify your actual folder paths
 if __name__ == "__main__":
     # MODIFY THESE PATHS TO YOUR ACTUAL DATA FOLDERS
-    acceptable_folder = "C:/Users/tc/Thesis_Project/Data_Sabic576P/io/io"  # Folder with _io.csv files
-    non_acceptable_folder = "C:/Users/tc/Thesis_Project/Data_Sabic576P/nio/nio"  # Folder with _nio.csv files
+    acceptable_folder = "/Users/omarhawas/Thesis_Project/Data_Sabic576P/io/io"  # Folder with _io.csv files
+    non_acceptable_folder = "/Users/omarhawas/Thesis_Project/Data_Sabic576P/nio/nio"  # Folder with _nio.csv files
 
     # Initialize classifier
     classifier = MoldingQualityClassifier(acceptable_folder, non_acceptable_folder)
